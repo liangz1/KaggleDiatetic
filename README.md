@@ -1,4 +1,4 @@
-RetinaOCT Project Log
+CMVRetina Project Log
 ====
 2017
 -----
