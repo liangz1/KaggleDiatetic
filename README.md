@@ -15,3 +15,12 @@ Meeting with Dr. Hayashi.
 
 2. Program:
 	We can try to build other image classification program using other datasets, so that when our retina data is ready, we just need to make some adjustment.
+	
+### Nov 15
+Prepared Business Card for this project.
+
+### Nov 22
+Research on team presentation. Found a company "D-EYE" that sells lens capturing retinal images based on iPhone.
+
+### Nov 27
+Finished team presentation slides.
