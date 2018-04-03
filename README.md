@@ -24,3 +24,14 @@ Research on team presentation. Found a company "D-EYE" that sells lens capturing
 
 ### Nov 27
 Finished team presentation slides.
+
+### Apr 3
+update data source:
+https://www.kaggle.com/c/diabetic-retinopathy-detection
+35,128 images
+http://www.adcis.net/en/Download-Third-Party/Messidor.htmlindex-en.php
+1200 images
+https://www.isi.uu.nl/Research/Databases/DRIVE/index.html
+40 images
+http://www.it.lut.fi/project/imageret/diaretdb1_v2_1/
+89 images
