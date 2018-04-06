@@ -1,5 +1,10 @@
 CMVRetina Project Log
 ====
+### Apr 4
+preprocessing:
+whitening
+anomaly detection
+
 
 ### Apr 3
 update data source:
