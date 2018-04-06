@@ -8,17 +8,25 @@ anomaly detection
 
 ### Apr 3
 update data source:
-https://www.kaggle.com/c/diabetic-retinopathy-detection
-35,128 images
-http://www.adcis.net/en/Download-Third-Party/Messidor.htmlindex-en.php
-1200 images
-https://www.isi.uu.nl/Research/Databases/DRIVE/index.html
-40 images
-http://www.it.lut.fi/project/imageret/diaretdb1_v2_1/
-89 images
------
-2018
 
+https://www.kaggle.com/c/diabetic-retinopathy-detection
+
+35,128 images
+
+http://www.adcis.net/en/Download-Third-Party/Messidor.htmlindex-en.php
+
+1200 images
+
+https://www.isi.uu.nl/Research/Databases/DRIVE/index.html
+
+40 images
+
+http://www.it.lut.fi/project/imageret/diaretdb1_v2_1/
+
+89 images
+
+2018
+-----
 ### Nov 27
 Finished team presentation slides.
 
@@ -40,5 +48,6 @@ First draft: https://docs.google.com/document/d/13QDQJKL8Mu3Wiylm2HqbXMd1_wGZSbm
 
 ### Oct 25
 Project Assigned
------
+
 2017
+-----
