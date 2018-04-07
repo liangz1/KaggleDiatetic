@@ -1,5 +1,11 @@
 CMVRetina Project Log
 ====
+### Apr 6
+Model group meeting:
+1. Shared paper 1 and 2
+2. Learn to use D-EYE lens. Recorded retina video for undiluted eyes.
+3. Need higher quality pictures for testing. Ways to concatenate pictures for different areas into one (or no need to do that?)
+
 ### Apr 4
 preprocessing:
 whitening
