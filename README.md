@@ -1,5 +1,8 @@
 CMVRetina Project Log
 ====
+2018
+-----
+
 ### Apr 6
 Model group meeting:
 1. Shared paper 1 and 2
@@ -31,8 +34,9 @@ http://www.it.lut.fi/project/imageret/diaretdb1_v2_1/
 
 89 images
 
-2018
+2017
 -----
+
 ### Nov 27
 Finished team presentation slides.
 
@@ -55,5 +59,3 @@ First draft: https://docs.google.com/document/d/13QDQJKL8Mu3Wiylm2HqbXMd1_wGZSbm
 ### Oct 25
 Project Assigned
 
-2017
------
