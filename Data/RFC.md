@@ -11,7 +11,8 @@ and
 
 [![Dilated Child](https://img.youtube.com/vi/LdGkxhm9PFA/3.jpg)](https://www.youtube.com/watch?v=LdGkxhm9PFA&feature=youtu.be&t=73s)
 
-Inquiry of authorized acquisition of such clips has been sent.
+Data from D-eye has been received. Special thanks to Spencer Lee from D-eye.
+[D-EYE Images and Videos](https://www.dropbox.com/sh/9t9flkrgcc44pmq/AACLLPqsp-6eJSL1bLw0ES86a?dl=0)
 
 ## Literature Review
 
