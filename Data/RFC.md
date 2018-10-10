@@ -24,3 +24,8 @@ The functionality can be implemented using openCV.
 
 One major concern would be that the retinal blood vessels are not static, making the features unidentifiable for stitching.
 Further literature review about approximation algorithms is to be conducted.
+
+## SIFT
+
+Video is parsed into frame images at default interval of 24.
+Initial experiment on dummy data. Further preprocessing of the retinal images is required.
