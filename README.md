@@ -1,5 +1,13 @@
 CMVRetina Project Log
 ====
+
+2019
+-----
+
+Project Management Page: https://trello.com/retinova/home
+
+
+
 2018
 -----
 
