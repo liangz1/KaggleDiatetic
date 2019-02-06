@@ -1,0 +1,19 @@
+scripts
+
+0. connect instance
+
+ssh -i /Users/lena/capstone.pem ubuntu@ec2-35-162-254-193.us-west-2.compute.amazonaws.com
+
+1. install kaggle cli tool.  
+
+source activate tensorflow_p36
+
+pip install kaggle
+
+2. mount volume. https://devopscube.com/mount-ebs-volume-ec2-instance/
+sudo mount /dev/xvdf /newvolume/
+
+3. download kaggle data
+kaggle competitions download -c diabetic-retinopathy-detection
+
+4. 
