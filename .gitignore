@@ -107,3 +107,6 @@ venv.bak/
 
 .idea/
 .DS_Store
+
+# matlab files (added by Shan Li)
+.mat
