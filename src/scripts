@@ -11,9 +11,50 @@ source activate tensorflow_p36
 pip install kaggle
 
 2. mount volume. https://devopscube.com/mount-ebs-volume-ec2-instance/
+
+lsblk
+
 sudo mount /dev/xvdf /newvolume/
+	
+umount /dev/xvdb
 
 3. download kaggle data
 kaggle competitions download -c diabetic-retinopathy-detection
 
-4. 
+4. open jupyter notebook
+
+jupyter notebook
+
+http://ec2-35-162-254-193.us-west-2.compute.amazonaws.com:8888/?token=88183addff0159ea041a52d9f0c95e3d4e5f4e1400b53837&token=88183addff0159ea041a52d9f0c95e3d4e5f4e1400b53837
+
+5. run scripts
+
+python convert.py --crop_size 128 --convert_directory data/train_tiny --extension tiff --directory ../train
+python convert.py --crop_size 128 --convert_directory data/test_tiny --extension tiff --directory ../test
+pip install -r requirements.txt
+python train_nn.py --cnf configs/c_128_4x4_32.py
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
