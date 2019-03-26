@@ -1,2 +1,4 @@
 *.npz
 src/.idea
+src/__pycache__
+*.h5
