@@ -8,7 +8,7 @@ ssh -i /Users/lena/capstone.pem ubuntu@ec2-35-162-254-193.us-west-2.compute.amaz
 
 source activate tensorflow_p36
 
-pip install kaggle
+pip3 install kaggle
 
 2. mount volume. https://devopscube.com/mount-ebs-volume-ec2-instance/
 
@@ -25,18 +25,18 @@ kaggle competitions download -c diabetic-retinopathy-detection
 
 jupyter notebook
 
-http://ec2-35-162-254-193.us-west-2.compute.amazonaws.com:8888/?token=88183addff0159ea041a52d9f0c95e3d4e5f4e1400b53837&token=88183addff0159ea041a52d9f0c95e3d4e5f4e1400b53837
-
+ec2-54-190-48-82.us-west-2.compute.amazonaws.com
 5. run scripts
-
-python convert.py --crop_size 128 --convert_directory data/train_tiny --extension tiff --directory ../train
-python convert.py --crop_size 128 --convert_directory data/test_tiny --extension tiff --directory ../test
+git clone https://github.com/sveitser/kaggle_diabetic.git
+python convert.py --crop_size 224 --convert_directory data/train_tiny --extension tiff --directory ../train
+python convert.py --crop_size 224 --convert_directory data/test_tiny --extension tiff --directory ../test
 pip install -r requirements.txt
 python train_nn.py --cnf configs/c_128_4x4_32.py
 
 
 
-
+SharedArray==0.2
+git+https://github.com/Theano/Theano.git@dfb2730348d05f6aadd116ce492e836a4c0ba6d6
 
 
 
