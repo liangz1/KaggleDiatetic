@@ -29,7 +29,7 @@ class F1Metrics(Callback):
 
 class InceptionDR:
 
-    def __init__(self, model_name='', optimizer='', loss='', lr=0):
+    def __init__(self, model_name='my_model', optimizer='sgd', loss='sparse_categorical_crossentropy', lr=0.0001):
         # Wrapping Karasx Inception model
         self.model_name = model_name
         self.lr = lr
@@ -98,8 +98,7 @@ class InceptionDR:
         path = '%s_%d.h5' % (self.model_name, epoch)
         self.model.save(path)
 
-    def load_best_model(self):
-        path = 'best_model.h5'
+    def load_best_model(self, path='best_model.h5'):
         self.model.load_weights(path)
 
     def start_fine_tune(self):

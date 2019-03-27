@@ -41,6 +41,7 @@ def main(args):
                         optimizer='adam',
                         loss='sparse_categorical_crossentropy',
                         lr=lr)
+    model.save(0)
 
     # train model
     losses = []

@@ -3,7 +3,7 @@ from PIL import Image
 import numpy
 
 
-def predict(image_path: str) -> float:
+def predict(image_path: str, best_model='inception_v3_0.h5') -> float:
     """
 
     :param image_path: str: path to image to be evaluated
@@ -16,6 +16,6 @@ def predict(image_path: str) -> float:
     # todo add preprocessing
 
     model = InceptionDR()
-    model.load_best_model()
+    model.load_best_model(best_model)
     y = model.model.predict(pix)
     return y[0]

@@ -14,4 +14,4 @@ def get_batches():
     # naive resampling TODO: better data balencing
     idx = np.concatenate([np.random.choice(np.where(Y==0)[0], 17560),
                           np.random.choice(np.where(Y==1)[0], 17560)])
-    return [(X[idx], Y[idx])]
+    return [(X[idx], Y[idx], 32, 0.2), ]
