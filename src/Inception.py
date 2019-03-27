@@ -29,7 +29,7 @@ class F1Metrics(Callback):
 
 class InceptionDR:
 
-    def __init__(self, model_name, optimizer, loss, lr):
+    def __init__(self, model_name='', optimizer='', loss='', lr=0):
         # Wrapping Karasx Inception model
         self.model_name = model_name
         self.lr = lr
@@ -97,6 +97,10 @@ class InceptionDR:
     def save(self, epoch):
         path = '%s_%d.h5' % (self.model_name, epoch)
         self.model.save(path)
+
+    def load_best_model(self):
+        path = 'best_model.h5'
+        self.model.load_weights(path)
 
     def start_fine_tune(self):
         # at this point, the top layers are well trained and we can start fine-tuning
