@@ -18,4 +18,4 @@ def predict(image_path: str, best_model='inception_v3_0.h5') -> float:
     model = InceptionDR()
     model.load_best_model(best_model)
     y = model.model.predict(pix)
-    return y[0]
+    return y[0][1]

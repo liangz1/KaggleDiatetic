@@ -49,8 +49,8 @@ class InceptionDR:
             x = base_model.output
             x = GlobalAveragePooling2D()(x)
             # let's add a fully-connected layer
-            x = Dense(1024, activation='relu')(x)
-            x = Dense(256, activation='relu')(x)
+            x = Dense(100, activation='relu')(x)
+            x = Dense(10, activation='relu')(x)
             # and a logistic layer -- let's say we have 2 classes
             predictions = Dense(2, activation='softmax')(x)
 
@@ -96,7 +96,7 @@ class InceptionDR:
 
     def save(self, epoch):
         path = '%s_%d.h5' % (self.model_name, epoch)
-        self.model.save(path)
+        self.model.save_weights(path)
 
     def load_best_model(self, path='best_model.h5'):
         self.model.load_weights(path)
