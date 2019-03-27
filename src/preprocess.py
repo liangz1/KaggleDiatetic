@@ -14,7 +14,7 @@ def increase_contrast(image, brightness=30, contrast=150):
     return img
 
 
-def center_and_crop(image, size=512):
+def center_and_crop(image, size=224):
     ret = image.copy()
     x = ret.shape[0]
     y = ret.shape[1]

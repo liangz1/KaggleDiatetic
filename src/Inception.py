@@ -94,7 +94,8 @@ class InceptionDR:
         hist = self.parallel_model.fit(
             X, Y,
             epochs=inner_epoch,
-	    shuffle=True,
+            shuffle=True,
+            class_weight={0: 0.75, 1: 0.25},
             validation_split=valid_split,
             batch_size=batch_size,
             callbacks=[F1Metrics()])

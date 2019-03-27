@@ -21,7 +21,8 @@ def parse_arguments():
                         default=224, help="Input dimension.")
     parser.add_argument('--model_name', dest='model_name', type=str,
                         default="inception_v3", help="Model name.")
-
+    parser.add_argument('--data_dir', dest='data_dir', type=str,
+                        default="/home/yunhan/data_dir", help="Data dir.")
     return parser.parse_args()
 
 
@@ -32,6 +33,7 @@ def main(args):
     lr = args.lr
     model_name = args.model_name
     input_dim = args.input_dim
+    data_dir = args.data_dir
 
     # get model
     model = InceptionDR(model_name=model_name,
@@ -42,18 +44,17 @@ def main(args):
 
     # train model
     losses = []
-    inner_epoch = 50
-    out_epoch = num_epochs // inner_epoch
-    for epoch in range(out_epoch):
-        print("Overall Epoch: %d" % ((epoch+1)*inner_epoch))
-        for X, Y, batch_size, valid_split in get_batches():      # get data
-            loss = model.train(X, Y, batch_size, valid_split, inner_epoch)
+    for epoch in range(num_epochs):
+        print("Overall Epoch: %d" % (epoch+1))
+        for X, Y, batch_size, valid_split in get_batches(data_dir):      # get data
+            loss = model.train(X, Y, batch_size, valid_split)
             losses.extend(loss)
 
             np.savetxt(fname='loss.txt', X=np.array(loss), fmt='%.8lf')
 
             # save weights periodically
             model.save(epoch)
+
 
 if __name__ == '__main__':
     main(sys.argv)
