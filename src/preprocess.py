@@ -20,7 +20,9 @@ def center_and_crop(image, size=224):
     y = ret.shape[1]
     l = min([x // 2, y // 2])
     crop = ret[ x // 2 - l : x // 2  + l,  y//2 - l : y//2 + l]
+    crop = np.array(crop, dtype=np.float32)
     crop = cv2.resize(crop, (size, size))
+    crop = np.array(crop, dtype=np.uint8)
     return crop
 
 
@@ -28,3 +30,4 @@ def preprocess(image):
     ret = center_and_crop(image)
     ret = increase_contrast(ret)
     return ret
+
