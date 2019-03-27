@@ -29,15 +29,19 @@ class F1Metrics(Callback):
 
 class InceptionDR:
 
-    def __init__(self, model_name='my_model', optimizer='sgd', loss='sparse_categorical_crossentropy', lr=0.0001):
-        # Wrapping Karasx Inception model
+    def __init__(self, model_name='my_model',
+                 input_shape=(224, 224, 3),
+                 optimizer='sgd',
+                 loss='sparse_categorical_crossentropy',
+                 lr=0.0001):
+        # Wrapping Karas Inception model
         self.model_name = model_name
         self.lr = lr
         self.optimizer = optimizer
         self.loss_fn = loss
 
         with tf.device('/cpu:0'):
-            input_tensor = Input(shape=(224, 224, 3))
+            input_tensor = Input(shape=input_shape)
 
             ###########################################
             # replace this part with model DEFINITION #
@@ -49,8 +53,8 @@ class InceptionDR:
             x = base_model.output
             x = GlobalAveragePooling2D()(x)
             # let's add a fully-connected layer
-            x = Dense(1024, activation='relu')(x)
-            x = Dense(256, activation='relu')(x)
+            x = Dense(50, activation='relu')(x)
+            x = Dense(50, activation='relu')(x)
             # and a logistic layer -- let's say we have 2 classes
             predictions = Dense(2, activation='softmax')(x)
 

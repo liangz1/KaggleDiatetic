@@ -17,15 +17,10 @@ def parse_arguments():
                         default=50, help="Number of epochs to train on.")
     parser.add_argument('--lr', dest='lr', type=float,
                         default=5e-4, help="learning rate.")
-
-    parser_group = parser.add_mutually_exclusive_group(required=False)
-    parser_group.add_argument('--render', dest='render',
-                              action='store_true',
-                              help="Whether to render the environment.")
-    parser_group.add_argument('--no-render', dest='render',
-                              action='store_false',
-                              help="Whether to render the environment.")
-    parser.set_defaults(render=False)
+    parser.add_argument('--input_dim', dest='input_dim', type=int,
+                        default=224, help="Input dimension.")
+    parser.add_argument('--model_name', dest='model_name', type=str,
+                        default="inception_v3", help="Model name.")
 
     return parser.parse_args()
 
@@ -35,13 +30,15 @@ def main(args):
     args = parse_arguments()
     num_epochs = args.num_epochs
     lr = args.lr
+    model_name = args.model_name
+    input_dim = args.input_dim
 
     # get model
-    model = InceptionDR(model_name='inception_v3',
+    model = InceptionDR(model_name=model_name,
+                        input_shape=(input_dim, input_dim, 3),
                         optimizer='adam',
                         loss='sparse_categorical_crossentropy',
                         lr=lr)
-    model.save(0)
 
     # train model
     losses = []
