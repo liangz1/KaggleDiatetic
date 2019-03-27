@@ -80,7 +80,7 @@ class InceptionDR:
         # compile the model (should be done *after* setting layers to non-trainable)
         parallel_model.compile(optimizer=self.optimizer, loss=self.loss_fn)
 
-    def train(self, X, Y, batch_size, valid_split):
+    def train(self, X, Y, batch_size, valid_split, inner_epoch=1):
         """
         X and Y can be the whole dataset, and also can be a large batch
         ONLY train one iteration over the entire X, Y
@@ -93,7 +93,8 @@ class InceptionDR:
 
         hist = self.parallel_model.fit(
             X, Y,
-            epochs=1,
+            epochs=inner_epoch,
+	    shuffle=True,
             validation_split=valid_split,
             batch_size=batch_size,
             callbacks=[F1Metrics()])

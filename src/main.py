@@ -42,18 +42,18 @@ def main(args):
 
     # train model
     losses = []
-    for epoch in range(num_epochs):
-        print("Overall Epoch: %d" % epoch)
+    inner_epoch = 50
+    out_epoch = num_epochs // inner_epoch
+    for epoch in range(out_epoch):
+        print("Overall Epoch: %d" % ((epoch+1)*inner_epoch))
         for X, Y, batch_size, valid_split in get_batches():      # get data
-            loss = model.train(X, Y, batch_size, valid_split)
+            loss = model.train(X, Y, batch_size, valid_split, inner_epoch)
             losses.extend(loss)
 
-        if epoch > 0 and epoch % 10 == 0:
             np.savetxt(fname='loss.txt', X=np.array(loss), fmt='%.8lf')
 
             # save weights periodically
             model.save(epoch)
-
 
 if __name__ == '__main__':
     main(sys.argv)
