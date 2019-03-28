@@ -9,14 +9,14 @@ from Inception import InceptionDR
 from data_utils import get_test_data
 
 
-def test(best_model_path='/home/ubuntu/EyeDiease_server/prediction/inception_v3_50_50_13_best_f1.h5'):
+def test(best_model_path='/home/yunhan/KaggleDiatetic/src/inception_v3_50_50_13_best_f1.h5'):
     """
 
     :param image_path: str: path to image to be evaluated
     :param best_model: str: path to best model weight file
     :return: probability of having DR
     """
-
+    print("building model")
     best_model = InceptionDR("eval")
     print("loading model")
     best_model.load_best_model(best_model_path)
