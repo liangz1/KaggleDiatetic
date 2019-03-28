@@ -37,7 +37,7 @@ def test(best_model_path='/home/yunhan/KaggleDiatetic/src/inception_v3_50_50_13_
         y = best_model.model.predict(batch)
         y_pred.append(y)
     pred_data = np.vstack(y_pred)
-    np.save('test_pred.npy', pred_data)
+    np.save('Y_3000_pred.npy', pred_data)
     return
 
 

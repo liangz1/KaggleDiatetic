@@ -34,6 +34,6 @@ def get_batches_mono(data_dir):
     return [(X, Y, 32, 0.2), ]
 
 
-def get_test_data(data_dir='/home/yunhan/data_dir/train_x_224.npy'):
+def get_test_data(data_dir='/home/yunhan/KaggleDiatetic/src/X_3000.npy'):
     X = np.load(data_dir)
     return X
