@@ -31,7 +31,7 @@ def test(best_model_path='/home/yunhan/KaggleDiatetic/src/inception_v3_50_50_13_
     y_pred = []
     for i in range(num_batch):
         print("testing batch %d" % (i+1))
-        batch = np.vstack(pix[i*batch_size:(i+1)*batch_size])
+        batch = np.stack(pix[i*batch_size:(i+1)*batch_size])
         batch = batch / 255
 
         y = best_model.model.predict(batch)
