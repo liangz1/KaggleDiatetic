@@ -1,10 +1,15 @@
-from .Inception import InceptionDR
 from PIL import Image
 import numpy as np
 from .preprocess import preprocess
 
 
-def predict(image_path: str, best_model='/home/yunhan/Desktop/EyeDiease_server/prediction/inception_v3_0.h5') -> float:
+# Usage:
+# from .Inception import InceptionDR
+# best_model_path='/home/ubuntu/EyeDiease_server/prediction/inception_v3_0.h5')
+# best_model = InceptionDR("eval")
+# best_model.load_best_model(best_model_path)
+# ret = predict(os.getcwd() + result.Patient_Eye_Img.url, best_model)
+def predict(image_path: str, best_model) -> float:
     """
 
     :param image_path: str: path to image to be evaluated
@@ -17,7 +22,5 @@ def predict(image_path: str, best_model='/home/yunhan/Desktop/EyeDiease_server/p
     pix = preprocess(pix)/255
     pix = np.expand_dims(pix, axis=0)
 
-    model = InceptionDR("eval")
-    model.load_best_model(best_model)
-    y = model.model.predict(pix)
+    y = best_model.model.predict(pix)
     return y[0][1]

@@ -1,19 +1,19 @@
-from keras.applications.inception_v3 import InceptionV3
+from keras.applications.mobilenet_v2 import MobileNetV2
 from keras.models import Model
 from keras.layers import Dense, GlobalAveragePooling2D, Input
 from keras.utils import multi_gpu_model
 import tensorflow as tf
 from metrics import F1Metrics
 
-
-class InceptionDR:
+# todo!
+class MobileNetDR:
 
     def __init__(self, model_name='my_model',
                  input_shape=(224, 224, 3),
                  optimizer='sgd',
                  loss='sparse_categorical_crossentropy',
                  lr=0.0001):
-        # Wrapping Karas Inception model
+        # Wrapping Karas MobileNet model
         self.model_name = model_name
         self.lr = lr
         self.optimizer = optimizer
@@ -25,7 +25,7 @@ class InceptionDR:
             ###########################################
             # replace this part with model DEFINITION #
             ###########################################
-            base_model = InceptionV3(input_tensor=input_tensor, weights='imagenet', include_top=False)
+            base_model = MobileNetV2(input_tensor=input_tensor, weights='imagenet', include_top=False)
             self.base_model = base_model
 
             # add a global spatial average pooling layer
