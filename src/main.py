@@ -6,7 +6,7 @@ import numpy as np
 from Inception import InceptionDR
 
 # Plug in data loader
-from data_utils import get_batches
+from data_utils import get_batches, get_batches_mono
 
 
 def parse_arguments():
@@ -20,7 +20,7 @@ def parse_arguments():
     parser.add_argument('--input_dim', dest='input_dim', type=int,
                         default=224, help="Input dimension.")
     parser.add_argument('--model_name', dest='model_name', type=str,
-                        default="inception_v3", help="Model name.")
+                        default="inception_v3_50_50", help="Model name.")
     parser.add_argument('--data_dir', dest='data_dir', type=str,
                         default="/home/yunhan/data_dir", help="Data dir.")
     return parser.parse_args()
@@ -43,17 +43,29 @@ def main(args):
                         lr=lr)
 
     # train model
+    data = get_batches_mono(data_dir)
+    X, Y, batch_size, valid_split = data[0]
+
     losses = []
     for epoch in range(num_epochs):
-        print("Overall Epoch: %d" % (epoch+1))
-        for X, Y, batch_size, valid_split in get_batches(data_dir):      # get data
-            loss = model.train(X, Y, batch_size, valid_split)
-            losses.extend(loss)
+        loss = model.train(X, Y, batch_size, valid_split, inner_epoch=1)
+        losses.extend(loss)
 
-            np.savetxt(fname='loss.txt', X=np.array(loss), fmt='%.8lf')
+        np.savetxt(fname='loss.txt', X=np.array(loss), fmt='%.8lf')
 
-            # save weights periodically
-            model.save(epoch)
+        # save weights periodically
+        model.save(epoch)
+
+        ##############################
+        #print("Overall Epoch: %d" % (epoch+1))
+        # for X, Y, batch_size, valid_split in get_batches_mono(data_dir):      # get data
+        #     loss = model.train(X, Y, batch_size, valid_split, inner_epoch=num_epochs)
+        #     losses.extend(loss)
+        #
+        #     np.savetxt(fname='loss.txt', X=np.array(loss), fmt='%.8lf')
+        #
+        #     # save weights periodically
+        #     model.save(epoch)
 
 
 if __name__ == '__main__':

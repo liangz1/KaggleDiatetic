@@ -1,6 +1,6 @@
 from keras.applications.inception_v3 import InceptionV3
 from keras.models import Model
-from keras.layers import Dense, GlobalAveragePooling2D, Input
+from keras.layers import Dense, GlobalAveragePooling2D, Input, Dropout
 from keras.utils import multi_gpu_model
 import tensorflow as tf
 from metrics import F1Metrics
@@ -33,8 +33,10 @@ class InceptionDR:
             x = GlobalAveragePooling2D()(x)
             # let's add a fully-connected layer
 
-            x = Dense(100, activation='relu')(x)
-            x = Dense(10, activation='relu')(x)
+            x = Dense(50, activation='relu')(x)
+            # x = Dropout(0.5)(x)
+            x = Dense(50, activation='relu')(x)
+            # x = Dropout(0.5)(x)
 
             # and a logistic layer -- let's say we have 2 classes
             predictions = Dense(2, activation='softmax')(x)
@@ -57,7 +59,7 @@ class InceptionDR:
         self.parallel_model = parallel_model
 
         # compile the model (should be done *after* setting layers to non-trainable)
-        parallel_model.compile(optimizer=self.optimizer, loss=self.loss_fn)
+        parallel_model.compile(optimizer=self.optimizer, loss=self.loss_fn, metrics=['accuracy'])
 
     def train(self, X, Y, batch_size, valid_split, inner_epoch=1):
         """
@@ -69,12 +71,15 @@ class InceptionDR:
         :param valid split: batch-wise validation split (for simplicity)
         :return: training losses
         """
-
+        pos_num = sum(Y==1)
+        neg_num = sum(Y==0)
+        pos_weight = neg_num / len(Y)
+        print("%d positive, %d negative" % (pos_num, neg_num))
         hist = self.parallel_model.fit(
             X, Y,
             epochs=inner_epoch,
             shuffle=True,
-            class_weight={0: 8., 1: 3.},
+            class_weight={0: (1-pos_weight), 1: pos_weight},
             validation_split=valid_split,
             batch_size=batch_size,
             callbacks=[F1Metrics()])

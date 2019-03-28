@@ -18,3 +18,16 @@ def get_batches(data_dir):
         # X = np.load('train_x_norm_sample.npy')
         # X = np.load('/home/yunhan/data_dir/train_x_224.npy')
         # Y = np.load('train_y_sample.npy')
+
+def get_batches_mono(data_dir):
+    """
+        return a list or generator of (large) ndarrays,
+        in order to efficiently utilize GPU
+    """
+    X = np.load('/home/yunhan/data_dir/train_x_224.npy')
+    # X = np.load('train_x_sample.npy')
+    X = X/255
+    # X = np.load('/home/yunhan/data_dir/train_x_224.npy')
+    Y = np.load('/home/yunhan/data_dir/train_y_224.npy')
+    # Y = np.load('train_y_sample.npy')
+    return [(X, Y, 32, 0.2), ]
