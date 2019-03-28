@@ -1,36 +1,46 @@
-import tensorflow as tf
-from keras.applications import Xception
-from keras.utils import multi_gpu_model
 import numpy as np
+# from preprocess import preprocess
+# from multiprocessing import Pool
 
-num_samples = 1000
-height = 224
-width = 224
-num_classes = 1000
+# Plug in custom models here
+from Inception import InceptionDR
 
-# Instantiate the base model (or "template" model).
-# We recommend doing this with under a CPU device scope,
-# so that the model's weights are hosted on CPU memory.
-# Otherwise they may end up hosted on a GPU, which would
-# complicate weight sharing.
-with tf.device('/cpu:0'):
-    model = Xception(weights=None,
-                     input_shape=(height, width, 3),
-                     classes=num_classes)
+# Plug in data loader
+from data_utils import get_test_data
 
-# Replicates the model on 8 GPUs.
-# This assumes that your machine has 8 available GPUs.
-parallel_model = multi_gpu_model(model, gpus=3)
-parallel_model.compile(loss='categorical_crossentropy',
-                       optimizer='rmsprop')
 
-# Generate dummy data.
-x = np.random.random((num_samples, height, width, 3))
-y = np.random.random((num_samples, num_classes))
+def test(best_model_path='/home/ubuntu/EyeDiease_server/prediction/inception_v3_50_50_13_best_f1.h5'):
+    """
 
-# This `fit` call will be distributed on 3 GPUs.
-# Since the batch size is 96, each GPU will process 32 samples.
-parallel_model.fit(x, y, epochs=20, batch_size=96)
+    :param image_path: str: path to image to be evaluated
+    :param best_model: str: path to best model weight file
+    :return: probability of having DR
+    """
 
-# Save model via the template model (which shares the same weights):
-model.save('my_model.h5')
+    best_model = InceptionDR("eval")
+    print("loading model")
+    best_model.load_best_model(best_model_path)
+    print("loading test data")
+    pix = get_test_data()
+    # with Pool(16) as p:
+    #     pix_prep = p.map(preprocess, pix)
+
+    n = pix.shape[0]
+    batch_size = 32
+    num_batch = n // batch_size
+    y_pred = []
+    for i in range(num_batch):
+        print("testing batch %d" % (i+1))
+        batch = np.vstack(pix[i*batch_size:(i+1)*batch_size])
+        batch = batch / 255
+
+        y = best_model.model.predict(batch)
+        y_pred.append(y)
+    pred_data = np.vstack(y_pred)
+    np.save('test_pred.npy', pred_data)
+    return
+
+
+if __name__ == '__main__':
+    test()
+

@@ -19,7 +19,7 @@ def predict(image_path: str, best_model) -> float:
     pic = Image.open(image_path)
     pix = np.array(pic.getdata()).reshape(pic.size[0], pic.size[1], 3)
 
-    pix = preprocess(pix)/255
+    pix = preprocess(pix)/255   # not training from this preprocessing method...
     pix = np.expand_dims(pix, axis=0)
 
     y = best_model.model.predict(pix)
