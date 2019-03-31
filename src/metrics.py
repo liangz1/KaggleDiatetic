@@ -29,6 +29,8 @@ class F1Metrics5Class(Callback):
         self.val_precisions = []
 
     def on_epoch_end(self, batch, logs={}):
+        if len(self.validation_data) < 2:
+            return
         predict = np.asarray(self.model.predict(self.validation_data[0])).argmax(axis=1)
         targ = self.validation_data[1]
         f1 = f1_score(targ, predict, average=None)
