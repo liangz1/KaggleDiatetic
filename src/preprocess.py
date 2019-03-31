@@ -2,11 +2,13 @@ import os
 import cv2
 import copy
 import numpy as np
+import pandas as pd
+import argparse
 
 
-def increase_contrast(image, brightness=30, contrast=150):
+def increase_contrast(image, contrast=150):
     gray = cv2.cvtColor(image.copy(), cv2.COLOR_BGR2GRAY)
-    brightness  = 100 - 0.5 * np.mean(gray)
+    brightness  = 100 - np.mean(gray)
     img = np.int16(image)
     img = img * (contrast/127 + 1) - contrast + brightness
     img = np.clip(img, 0, 255)
@@ -14,7 +16,7 @@ def increase_contrast(image, brightness=30, contrast=150):
     return img
 
 
-def center_and_crop(image, size=224):
+def center_and_crop(image, size=512):
     ret = image.copy()
     x = ret.shape[0]
     y = ret.shape[1]
@@ -31,3 +33,63 @@ def preprocess(image):
     ret = increase_contrast(ret)
     return ret
 
+
+if __name__ == "__main__":
+    
+    parser = argparse.ArgumentParser()
+    parser.add_argument('input_dir', type=str)
+    parser.add_argument('output_dir', type=str)
+    parser.add_argument('batch_size', type=int)
+    parser.add_argument('mode', type=int)
+    args = parser.parse_args()
+    
+    try:
+        os.stat(args.output_dir)
+    except:
+        os.mkdir(args.output_dir) 
+    
+    data = []
+    label = []
+    batch_idx = 0
+    
+    df1 = pd.read_csv("retinopathy_solution.csv")
+    df2 = pd.read_csv("trainLabels.csv")
+    df = df1.append(df2)
+    total_batch = len(df) // args.batch_size + 1
+    df = df.sample(frac=1).reset_index(drop=True)
+
+    for idx in range(len(df)):
+        entry = df.iloc[[idx]]
+        path =  args.input_dir + "/" + entry['image'].values + ".jpeg"
+        y = entry['level'].values
+        path = str(path[0])
+        # print(path)
+        image = cv2.imread(path)
+        if image is None:
+            print("Failed to open {}".format(path))
+            continue
+        res = preprocess(image)
+        
+        if idx % args.batch_size == 0 and idx != 0:
+            data = np.array(data, dtype=np.uint8)
+            label = np.array(label, dtype=np.uint8)
+            batch_idx += 1
+            print("Saving batch {} out of {}".format(batch_idx, total_batch))
+            np.save("{}/X{}.npy".format(args.output_dir, batch_idx), data)
+            np.save("{}/y{}.npy".format(args.output_dir, batch_idx), label)
+            data = []
+            label = []
+        
+        if args.mode == 0:
+            data.append(res)
+            label.append(y)
+                
+        if args.mode == 1:
+            cv2.imwrite(args.output_dir + "/" + entry['image'] + ".jpeg", res)
+    
+    data = np.array(data, dtype=np.uint8)
+    label = np.array(label, dtype=np.uint8)
+    batch_idx += 1
+    print("Saving batch {} out of {}".format(batch_idx, total_batch))
+    np.save("{}/X_{}.npy".format(args.output_dir, batch_idx), data)
+    np.save("{}/y{}.npy".format(args.output_dir, batch_idx), label)
