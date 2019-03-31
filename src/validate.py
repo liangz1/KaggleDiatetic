@@ -58,7 +58,6 @@ def parse_arguments():
 def main(args):
     # Parse command-line arguments.
     args = parse_arguments()
-    lr = args.lr
     model_name = args.model_name
     input_dim = args.input_dim
     output_dim = args.output_dim
@@ -71,8 +70,7 @@ def main(args):
                         input_shape=(input_dim, input_dim, 3),
                         output_dim=output_dim,
                         optimizer='adam',
-                        loss='sparse_categorical_crossentropy',
-                        lr=lr)
+                        loss='sparse_categorical_crossentropy')
 
     for model_name in os.listdir(model_dir):
         if not model_name.endswith('.h5'):
