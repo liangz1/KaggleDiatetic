@@ -73,13 +73,7 @@ class InceptionDR:
         :param valid split: batch-wise validation split (for simplicity)
         :return: training losses
         """
-        class_weight = {}
-        total = len(Y)
-        # print(Y.shape)
-        for i in range(self.output_dim):
-            x = max(sum(Y == i), 1)
-            # print(x)
-            class_weight[i] = total / x
+        class_weight = {0: 1, 2: 5, 1: 10.5, 4: 34.1, 3: 31.3}
         print("class weight %s" % str(class_weight))
         hist = self.parallel_model.fit(
             X, Y,
