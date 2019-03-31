@@ -63,6 +63,7 @@ def get_batches_mono(data_dir):
     return [(X, Y, 32, 0.2), ]
 
 
-def get_test_data(data_dir='/home/yunhan/KaggleDiatetic/src/X_3000.npy'):
-    X = np.load(data_dir)
-    return X
+def get_test_data_batches(data_dir='/home/yunhan/data_dir'):
+    for i in range(17):
+        X = np.load("%s/X_%d.npy" % (data_dir, 3000*(i+1)))/255.
+        yield X
