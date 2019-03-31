@@ -13,12 +13,15 @@ from Inception import InceptionDR
 from data_utils import get_evaluate_batches
 
 
-def validate(model, model_path, data_dir):
+def validate(model, model_dir, model_name, data_dir):
     """
     :param: model: model object
-    :param model_path: str: path to model weight file
+    :param model_dir: str: dir to model weight file
+    :param data_dir: str: path to data
+    :param model_name: str: name of model weight file
     :return: validation result for all models
     """
+    model_path = model_dir+model_name
     print("loading model weight" + model_path)
     model.load_best_model(model_path)
     print("loading valid data")
@@ -30,7 +33,7 @@ def validate(model, model_path, data_dir):
         y_true.append(Y)
     pred_data = np.vstack(y_pred)
     true_data = np.vstack(y_true)
-    np.save('Y_all_pred.npy', pred_data)
+    np.save(model_name+'Y_all_pred.npy', pred_data)
     np.save('Y_all_true.npy', true_data)
     return
 
@@ -74,7 +77,7 @@ def main(args):
     for model_name in os.listdir(model_dir):
         if not model_name.endswith('.h5'):
             continue
-        validate(model, model_dir + model_name, data_dir)
+        validate(model, model_dir, model_name, data_dir)
 
 
 if __name__ == '__main__':
