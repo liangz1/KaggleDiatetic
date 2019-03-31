@@ -72,7 +72,9 @@ def main(args):
                         optimizer='adam',
                         loss='sparse_categorical_crossentropy')
 
-    for model_name in os.listdir(model_dir):
+    for model_name in ['inception_v3_50_50_5class_0.h5',
+                       'inception_v3_50_50_5class_1.h5',
+                       'inception_v3_50_50_5class_2.h5']:
         if not model_name.endswith('.h5'):
             continue
         validate(model, model_dir, model_name, data_dir)
