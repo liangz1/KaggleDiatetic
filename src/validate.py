@@ -28,7 +28,7 @@ def validate(model, model_dir, model_name, data_dir):
     y_pred = []
     y_true = []
     for X, Y in get_evaluate_batches(data_dir):
-        _, _, _, y = calc_metric(model, X, Y)
+        _, _, _, y = calc_metric(model.model, X, Y)
         y_pred.append(y)
         y_true.append(Y)
     pred_data = np.vstack(y_pred)
