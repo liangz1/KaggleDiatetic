@@ -67,13 +67,12 @@ def main(args):
     for epoch in range(num_epochs):
 
         print("Overall Epoch: %d" % (epoch+1))
+        X_valid, Y_valid = gen_valid.__next__()
         for i, (X, Y) in enumerate(get_train_batches(data_dir)):      # get training data
-            loss = model.train(X, Y, batch_size=32)
+            loss = model.train(X, Y, valid_data=(X_valid, Y_valid))
             losses.extend(loss)
             if (i+1) % 3 == 0:
                 X_valid, Y_valid = gen_valid.__next__()
-                valid_ret = model.model.evaluate(X_valid, Y_valid)
-                print(valid_ret)
 
         np.savetxt(fname='loss.txt', X=np.array(losses), fmt='%.8lf')
 
