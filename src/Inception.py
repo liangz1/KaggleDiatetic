@@ -1,20 +1,22 @@
 from keras.applications.inception_v3 import InceptionV3
 from keras.models import Model
-from keras.layers import Dense, GlobalAveragePooling2D, Input, Dropout
+from keras.layers import Dense, GlobalAveragePooling2D, Input
 from keras.utils import multi_gpu_model
 import tensorflow as tf
-from metrics import F1Metrics
+from metrics import F1Metrics5Class
 
 
 class InceptionDR:
 
     def __init__(self, model_name='my_model',
                  input_shape=(224, 224, 3),
+                 output_dim=2,
                  optimizer='sgd',
                  loss='sparse_categorical_crossentropy',
                  lr=0.0001):
         # Wrapping Karas Inception model
         self.model_name = model_name
+        self.output_dim = output_dim
         self.lr = lr
         self.optimizer = optimizer
         self.loss_fn = loss
@@ -38,8 +40,8 @@ class InceptionDR:
             x = Dense(50, activation='relu')(x)
             # x = Dropout(0.5)(x)
 
-            # and a logistic layer -- let's say we have 2 classes
-            predictions = Dense(2, activation='softmax')(x)
+            # and a logistic layer -- we have output_dim classes
+            predictions = Dense(output_dim, activation='softmax')(x)
 
             # first: train only the top layers (which were randomly initialized)
             # i.e. freeze all convolutional InceptionV3 layers
@@ -61,7 +63,7 @@ class InceptionDR:
         # compile the model (should be done *after* setting layers to non-trainable)
         parallel_model.compile(optimizer=self.optimizer, loss=self.loss_fn, metrics=['accuracy'])
 
-    def train(self, X, Y, batch_size, valid_split, inner_epoch=1):
+    def train(self, X, Y, batch_size=32, valid_split=0, inner_epoch=1):
         """
         X and Y can be the whole dataset, and also can be a large batch
         ONLY train one iteration over the entire X, Y
@@ -71,18 +73,20 @@ class InceptionDR:
         :param valid split: batch-wise validation split (for simplicity)
         :return: training losses
         """
-        pos_num = sum(Y==1)
-        neg_num = sum(Y==0)
-        pos_weight = neg_num / len(Y)
-        print("%d positive, %d negative" % (pos_num, neg_num))
+        class_weight = {}
+        total = len(Y)
+        for i in range(self.output_dim):
+            x = min(sum(Y == i), 1)
+            class_weight[i] = total / x
+        print("class weight %s" % str(class_weight))
         hist = self.parallel_model.fit(
             X, Y,
             epochs=inner_epoch,
             shuffle=True,
-            class_weight={0: (1-pos_weight), 1: pos_weight},
+            class_weight=class_weight,
             validation_split=valid_split,
             batch_size=batch_size,
-            callbacks=[F1Metrics()])
+            callbacks=[F1Metrics5Class()])
 
         return hist.history['loss']
 

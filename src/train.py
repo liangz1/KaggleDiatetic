@@ -6,7 +6,8 @@ import numpy as np
 from Inception import InceptionDR
 
 # Plug in data loader
-from data_utils import get_batches, get_batches_mono
+# from data_utils import get_batches_mono
+from data_utils import get_train_batches, get_evaluate_batches
 
 
 def parse_arguments():
@@ -22,7 +23,7 @@ def parse_arguments():
     parser.add_argument('--model_name', dest='model_name', type=str,
                         default="inception_v3_50_50", help="Model name.")
     parser.add_argument('--data_dir', dest='data_dir', type=str,
-                        default="/home/yunhan/data_dir", help="Data dir.")
+                        default="/home/yunhan/batchified", help="Data dir.")
     return parser.parse_args()
 
 
@@ -42,30 +43,38 @@ def main(args):
                         loss='sparse_categorical_crossentropy',
                         lr=lr)
 
-    # train model
-    data = get_batches_mono(data_dir)
-    X, Y, batch_size, valid_split = data[0]
+    # train model mono
+    # data = get_batches_mono(data_dir)
+    # X, Y, batch_size, valid_split = data[0]
+    #
+    # losses = []
+    # for epoch in range(num_epochs):
+    #     loss = model.train(X, Y, batch_size, valid_split, inner_epoch=1)
+    #     losses.extend(loss)
+    #
+    #     np.savetxt(fname='loss.txt', X=np.array(loss), fmt='%.8lf')
+    #
+    #     # save weights periodically
+    #     model.save(epoch)
 
+    # train model batchified
     losses = []
+    gen_valid = get_evaluate_batches()
     for epoch in range(num_epochs):
-        loss = model.train(X, Y, batch_size, valid_split, inner_epoch=1)
-        losses.extend(loss)
 
-        np.savetxt(fname='loss.txt', X=np.array(loss), fmt='%.8lf')
+        print("Overall Epoch: %d" % (epoch+1))
+        for i, (X, Y) in enumerate(get_train_batches()):      # get training data
+            loss = model.train(X, Y, batch_size=32)
+            losses.extend(loss)
+            if (i+1) % 3 == 0:
+                X_valid, Y_valid = gen_valid.__next__()
+                valid_ret = model.model.evaluate(X_valid, Y_valid)
+                print(valid_ret)
+
+        np.savetxt(fname='loss.txt', X=np.array(losses), fmt='%.8lf')
 
         # save weights periodically
         model.save(epoch)
-
-        ##############################
-        #print("Overall Epoch: %d" % (epoch+1))
-        # for X, Y, batch_size, valid_split in get_batches_mono(data_dir):      # get data
-        #     loss = model.train(X, Y, batch_size, valid_split, inner_epoch=num_epochs)
-        #     losses.extend(loss)
-        #
-        #     np.savetxt(fname='loss.txt', X=np.array(loss), fmt='%.8lf')
-        #
-        #     # save weights periodically
-        #     model.save(epoch)
 
 
 if __name__ == '__main__':

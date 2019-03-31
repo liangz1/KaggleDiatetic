@@ -1,23 +1,52 @@
 import numpy as np
-import os
 
 
-def get_batches(data_dir):
+def get_train_batches(data_dir='/home/yunhan/batchified'):
     """
         return a list or generator of (large) ndarrays,
         in order to efficiently utilize GPU
     """
     # todo: read in data that is preoprocessed
-    batch_names = os.listdir(data_dir + '/X/')
-    n = len(batch_names)
+    # Use batch 1 - 52 as train (60%), 53 - 71 as validation (20%), 72 - 89 as test (20%)
+    n = 53
     idx = np.random.permutation(n)
+    idx = idx + 1
     for i in range(n):
-        X = np.load(data_dir + '/X/' + batch_names[idx[i]])
-        Y = np.load(data_dir + '/Y/' + batch_names[idx[i]])
-        yield X, Y, 32, 0.2
-        # X = np.load('train_x_norm_sample.npy')
-        # X = np.load('/home/yunhan/data_dir/train_x_224.npy')
-        # Y = np.load('train_y_sample.npy')
+        X = np.load("%s/X%d.npy" % (data_dir, idx[i]))
+        Y = np.load("%s/y%d.npy" % (data_dir, idx[i]))
+        yield X, Y
+
+
+def get_evaluate_batches(data_dir='/home/yunhan/batchified'):
+    """
+        return a list or generator of (large) ndarrays,
+        in order to efficiently utilize GPU
+    """
+    # train 3 valid 1
+    # Use batch 1 - 53 as train (60%), 54 - 71 as validation (20%), 72 - 89 as test (20%)
+    n = 18
+    idx = np.random.permutation(n)
+    idx = idx + 54
+    for i in range(n):
+        X = np.load("%s/X%d.npy" % (data_dir, idx[i]))
+        Y = np.load("%s/y%d.npy" % (data_dir, idx[i]))
+        yield X, Y
+
+
+def get_test_batches(data_dir='/home/yunhan/batchified'):
+    """
+        return a list or generator of (large) ndarrays,
+        in order to efficiently utilize GPU
+    """
+    # train 3 valid 1
+    # Use batch 1 - 53 as train (60%), 54 - 71 as validation (20%), 72 - 89 as test (20%)
+    n = 18
+    idx = np.random.permutation(n)
+    idx = idx + 72
+    for i in range(n):
+        X = np.load("%s/X%d.npy" % (data_dir, idx[i]))
+        Y = np.load("%s/y%d.npy" % (data_dir, idx[i]))
+        yield X, Y
 
 
 def get_batches_mono(data_dir):
