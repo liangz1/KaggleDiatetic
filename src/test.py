@@ -9,11 +9,11 @@ from Inception import InceptionDR
 from data_utils import get_test_data_batches
 
 
-def test_old(best_model_path='/home/yunhan/KaggleDiatetic/src/inception_v3_50_50_13_best_f1.h5'):
+def test_old(best_model_path=
+             '/home/yunhan/KaggleDiatetic/src/inception_v3_binary_class/inception_v3_50_50_13_best_f1.h5'):
     """
 
-    :param image_path: str: path to image to be evaluated
-    :param best_model: str: path to best model weight file
+    :param best_model_path: str: path to best model weight file
     :return: probability of having DR
     """
     print("building model")
