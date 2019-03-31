@@ -13,7 +13,7 @@ def get_train_batches(data_dir='/home/yunhan/batchified'):
     idx = idx + 1
     for i in range(n):
         X = np.load("%s/X%d.npy" % (data_dir, idx[i]))/255.
-        Y = np.load("%s/y%d.npy" % (data_dir, idx[i]))
+        Y = np.load("%s/y%d.npy" % (data_dir, idx[i])).reshape(-1)
         yield X, Y
 
 
@@ -29,7 +29,7 @@ def get_evaluate_batches(data_dir='/home/yunhan/batchified'):
     idx = idx + 54
     for i in range(n):
         X = np.load("%s/X%d.npy" % (data_dir, idx[i]))/255.
-        Y = np.load("%s/y%d.npy" % (data_dir, idx[i]))
+        Y = np.load("%s/y%d.npy" % (data_dir, idx[i])).reshape(-1)
         yield X, Y
 
 
@@ -45,7 +45,7 @@ def get_test_batches(data_dir='/home/yunhan/batchified'):
     idx = idx + 72
     for i in range(n):
         X = np.load("%s/X%d.npy" % (data_dir, idx[i]))/255.
-        Y = np.load("%s/y%d.npy" % (data_dir, idx[i]))
+        Y = np.load("%s/y%d.npy" % (data_dir, idx[i])).reshape(-1)
         yield X, Y
 
 

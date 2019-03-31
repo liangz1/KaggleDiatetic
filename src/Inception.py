@@ -75,10 +75,10 @@ class InceptionDR:
         """
         class_weight = {}
         total = len(Y)
-        print(Y.shape)
+        # print(Y.shape)
         for i in range(self.output_dim):
             x = max(sum(Y == i), 1)
-            print(x)
+            # print(x)
             class_weight[i] = total / x
         print("class weight %s" % str(class_weight))
         hist = self.parallel_model.fit(
