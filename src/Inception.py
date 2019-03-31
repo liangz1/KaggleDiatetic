@@ -63,7 +63,7 @@ class InceptionDR:
         # compile the model (should be done *after* setting layers to non-trainable)
         parallel_model.compile(optimizer=self.optimizer, loss=self.loss_fn, metrics=['accuracy'])
 
-    def train(self, X, Y, valid_data, batch_size=32, inner_epoch=1):
+    def train(self, X, Y, valid_data=None, batch_size=32, inner_epoch=1):
         """
         X and Y can be the whole dataset, and also can be a large batch
         ONLY train one iteration over the entire X, Y
@@ -75,8 +75,10 @@ class InceptionDR:
         """
         class_weight = {}
         total = len(Y)
+        print(Y.shape)
         for i in range(self.output_dim):
             x = max(sum(Y == i), 1)
+            print(x)
             class_weight[i] = total / x
         print("class weight %s" % str(class_weight))
         hist = self.parallel_model.fit(

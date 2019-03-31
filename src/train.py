@@ -63,16 +63,18 @@ def main(args):
 
     # train model batchified
     losses = []
-    gen_valid = get_evaluate_batches(data_dir)
     for epoch in range(num_epochs):
 
+        gen_valid = get_evaluate_batches(data_dir)
         print("Overall Epoch: %d" % (epoch+1))
-        X_valid, Y_valid = gen_valid.__next__()
         for i, (X, Y) in enumerate(get_train_batches(data_dir)):      # get training data
-            loss = model.train(X, Y, valid_data=(X_valid, Y_valid))
-            losses.extend(loss)
             if (i+1) % 3 == 0:
                 X_valid, Y_valid = gen_valid.__next__()
+                loss = model.train(X, Y, valid_data=(X_valid, Y_valid))
+            else:
+                loss = model.train(X, Y)
+
+            losses.extend(loss)
 
         np.savetxt(fname='loss.txt', X=np.array(losses), fmt='%.8lf')
 
