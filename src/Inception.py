@@ -92,6 +92,22 @@ class InceptionDR:
 
         return hist.history['loss']
 
+    def validate(self, X, Y):
+        """
+        X and Y can be the whole dataset, and also can be a large batch
+        ONLY train one iteration over the entire X, Y
+        :param X: ndarray
+        :param Y: ndarray
+        :param batch_size
+        :param valid split: batch-wise validation split (for simplicity)
+        :return: training losses
+        """
+
+        hist = self.parallel_model.evaluate(
+            X, Y, callbacks=[F1Metrics5Class()])
+
+        return hist.history
+
     def save(self, epoch):
         path = '%s_%d.h5' % (self.model_name, epoch)
         self.model.save_weights(path)
