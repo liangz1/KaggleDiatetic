@@ -4,3 +4,7 @@ src/__pycache__
 *.h5
 .idea
 .DS_Store
+coreML/bin
+coreML/include
+coreML/lib
+
