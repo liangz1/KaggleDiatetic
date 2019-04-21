@@ -7,4 +7,5 @@ src/__pycache__
 coreML/bin
 coreML/include
 coreML/lib
-
+.jpg
+.jpeg
