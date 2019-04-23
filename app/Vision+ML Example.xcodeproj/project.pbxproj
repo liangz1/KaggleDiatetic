@@ -13,7 +13,7 @@
 		11063F691EC0EECC0033EE6D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11063F681EC0EECC0033EE6D /* Assets.xcassets */; };
 		11063F741EC0F5270033EE6D /* CGImagePropertyOrientation+UIImageOrientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11063F731EC0F5270033EE6D /* CGImagePropertyOrientation+UIImageOrientation.swift */; };
 		113695D81EC1151400CA6C43 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 113695D61EC1151400CA6C43 /* LaunchScreen.storyboard */; };
-		B8050216226C2FF900339ED0 /* coreml_model.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = B8050215226C2FF900339ED0 /* coreml_model.mlmodel */; };
+		B805021A226E70F100339ED0 /* coreml_model.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = B8050219226E70F100339ED0 /* coreml_model.mlmodel */; };
 		C89947DA1F4639D6005C0A19 /* MobileNet.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = C89947D91F4639A8005C0A19 /* MobileNet.mlmodel */; };
 /* End PBXBuildFile section */
 
@@ -28,7 +28,7 @@
 		113695D71EC1151400CA6C43 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A9558E70A9563BA000000001 /* SampleCode.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = SampleCode.xcconfig; path = Configuration/SampleCode.xcconfig; sourceTree = "<group>"; };
 		A9666960A9666AD000000001 /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
-		B8050215226C2FF900339ED0 /* coreml_model.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = coreml_model.mlmodel; sourceTree = "<group>"; };
+		B8050219226E70F100339ED0 /* coreml_model.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = coreml_model.mlmodel; path = ../../coreML/coreml_model.mlmodel; sourceTree = "<group>"; };
 		C858E5CC1ECA99CC006C5CAA /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C89947D91F4639A8005C0A19 /* MobileNet.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = MobileNet.mlmodel; path = Model/MobileNet.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -69,8 +69,8 @@
 				11063F611EC0EECC0033EE6D /* AppDelegate.swift */,
 				11063F631EC0EECC0033EE6D /* ImageClassificationViewController.swift */,
 				11063F731EC0F5270033EE6D /* CGImagePropertyOrientation+UIImageOrientation.swift */,
+				B8050219226E70F100339ED0 /* coreml_model.mlmodel */,
 				C89947D91F4639A8005C0A19 /* MobileNet.mlmodel */,
-				B8050215226C2FF900339ED0 /* coreml_model.mlmodel */,
 				11063F651EC0EECC0033EE6D /* Main.storyboard */,
 				C82A1C951F1809F5005996F6 /* Supporting Files */,
 			);
@@ -177,7 +177,7 @@
 				C89947DA1F4639D6005C0A19 /* MobileNet.mlmodel in Sources */,
 				11063F741EC0F5270033EE6D /* CGImagePropertyOrientation+UIImageOrientation.swift in Sources */,
 				11063F641EC0EECC0033EE6D /* ImageClassificationViewController.swift in Sources */,
-				B8050216226C2FF900339ED0 /* coreml_model.mlmodel in Sources */,
+				B805021A226E70F100339ED0 /* coreml_model.mlmodel in Sources */,
 				11063F621EC0EECC0033EE6D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

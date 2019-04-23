@@ -32,7 +32,8 @@ class ImageClassificationViewController: UIViewController {
             let request = VNCoreMLRequest(model: model, completionHandler: { [weak self] request, error in
                 self?.processClassifications(for: request, error: error)
             })
-            request.imageCropAndScaleOption = .centerCrop
+//            request.imageCropAndScaleOption = .centerCrop
+            request.imageCropAndScaleOption = .scaleFill
             return request
         } catch {
             fatalError("Failed to load Vision ML model: \(error)")
@@ -77,12 +78,28 @@ class ImageClassificationViewController: UIViewController {
             } else {
                 // Display top classifications ranked by confidence in the UI.
                 let topClassifications = classifications.prefix(2)
-                
-                let descriptions = topClassifications.map { classification in
-                    // Formats the classification for display; e.g. "(0.37) cliff, drop, drop-off".
-                   return String(format: "  (%.2f) %@", classification.confidence, classification.identifier)
+//                NSLog(String(format: "%.2f", topClassifications[0].confidence))
+//                NSLog("" + topClassifications[0].identifier)
+//                let descriptions = topClassifications.map { classification in
+//                    // Formats the classification for display; e.g. "(0.37) cliff, drop, drop-off".
+//                   return String(format: "  (%.2f) %@", classification.confidence, classification.identifier)
+//                }
+                var pob = Float(0)
+                if topClassifications[0].identifier == "positive"{
+                    pob = topClassifications[1].confidence
+                }else{
+                    pob = topClassifications[0].confidence
                 }
-                self.classificationLabel.text = "Classification:\n" + descriptions.joined(separator: "\n")
+                
+                if pob <= 0.55{
+                    self.classificationLabel.text = "Classification result:\n" + "Great! Your eyes are in good conditions."
+                }
+                else if pob <= 0.7 {
+                    self.classificationLabel.text = "Classification result:\n" + "Attention! Your eyes are poor conditions, we highly recommend you to see doctors."
+                }
+                else{
+                    self.classificationLabel.text = "Classification result:\n" + "Urgent! You are likely to have eye diseases, please see doctors as soon as possible."
+                }
             }
         }
     }
