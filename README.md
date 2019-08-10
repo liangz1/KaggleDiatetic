@@ -4,7 +4,7 @@ CMVRetina Project Log
 2019
 -----
 
-Project Management Page: https://trello.com/retinova/home
+Project Management Page: https://trello.com/retinova/home (for group members only)
 
 
 
